@@ -15,7 +15,16 @@ class BooksController < ApplicationController
   end
 
   def show
-    @book = book.find(params[:id])
+    @book = Book.find(params[:id])
+    # @book = Book.new →投稿したidに飛ぶようにする？
+  end
+
+  def destroy
+    @book = Book.find(params[:id])
+    @book.user_id = current_user.id
+    @book.destroy
+    redirect_to books_path
+    flash[:notice]="消しちゃったよよ!!!!!!!!!!!!"
   end
 
   private

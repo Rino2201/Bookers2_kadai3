@@ -1,2 +1,12 @@
-<h1>Books#index</h1>
-<p>Find me in app/views/books/index.html.erb</p>
+<p id="notice"><%= flash[:notice] %></p>
+<!--色変える場合用にid=notice取っておく-->
+
+<h1>Books</h1>
+
+<% @books.each do |book| %>
+<div>
+  <p>Title：<%= book.title %></p>
+  <p>Opinion：<%= book.body %></p>
+  <p><%= book.user.name %></p>
+</div>
+<% end %>
