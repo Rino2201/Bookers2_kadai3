@@ -5,10 +5,14 @@ class ApplicationController < ActionController::Base
   def after_sign_in_path_for(resource)
     about_path
   end
+  # ログイン後は'/users/;id'へ!!
+  # 未変更1/23
 
   def after_sign_out_path_for(resource)
     about_path
   end
+  # ログアウト後は'homes#top' '/'へ!!
+  # 未変更1/23
 
   protected
 
