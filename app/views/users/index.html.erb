@@ -1,2 +1,14 @@
-<h1>Users#index</h1>
-<p>Find me in app/views/users/index.html.erb</p>
+<%= render 'list', user:@user , book:@book %>
+<!--users-indexが表示できない-->
+
+<h1>Users</h1>
+
+<% @users.each do |user| %>
+<div>
+  <%= image_tag user.get_profile_image("100x100") %>
+  <!--プロフィール画像関連については一旦保留-->
+  <p><%= user.name %></p>
+  <%= link_to "show", user_path(user.id) %>
+
+</div>
+<% end %>

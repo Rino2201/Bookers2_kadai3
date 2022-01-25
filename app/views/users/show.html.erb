@@ -1,2 +1,21 @@
-<h1>Users#show</h1>
-<p>Find me in app/views/users/show.html.erb</p>
+<!--< render 'list', users:@user , book:@book %>-->
+<!--共通化一旦保留-->
+
+<h1>Books</h1>
+
+<!-- ユーザーの詳細 -->
+<!--<div>-->
+<!--  <h3>< @user.name %></h3>-->
+<!--  < image_tag user.get_profile_image("100x100") %>-->
+<!--</div>-->
+<!--これらは共通ページへ！user info-->
+
+<!-- ユーザーの投稿一覧 -->
+
+<% @books.each do |book| %>
+<div>
+  <p><%= image_tag book.user.get_profile_image("100x100") %></p>
+  <p>Title<%= book.title %></p>
+  <p>Opinion<%= book.body %></p>
+</div>
+<% end %>

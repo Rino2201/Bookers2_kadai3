@@ -1,10 +1,13 @@
 <p id="notice"><%= flash[:notice] %></p>
 <!--色変える場合用にid=notice取っておく-->
 
+<%= render 'list', user:@user , book:@book %>
+
 <h1>Books</h1>
 
 <% @books.each do |book| %>
 <div>
+  <p><%= image_tag book.user.get_profile_image("100x100") %></p>
   <p>Title：<%= book.title %></p>
   <p>Opinion：<%= book.body %></p>
   <p><%= book.user.name %></p>
