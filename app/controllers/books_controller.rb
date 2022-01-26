@@ -1,26 +1,35 @@
 class BooksController < ApplicationController
+  before_action :authenticate_user!
+  before_action :limited_user,only:[:edit,:update]
+  #最下部にて
+
   def new
-    @book = Book.new
+    @newbook = Book.new
   end
 
   def create
-    @book = Book.new(book_params)
-    @book.user_id = current_user.id
-    if @book.save
-      redirect_to books_path
+    @user = User.find(current_user.id)
+    @newbook = Book.new(book_params)
+    @newbook.user_id = current_user.id
+    if @newbook.save
+      flash[:notice] = 'You have created book successfully'
+      redirect_to book_path(@newbook.id)
     else
-      render :new
-      ##newで良いのか検討
+      @books = Book.all
+      render :index
     end
   end
 
   def index
     @books = Book.all
+    @newbook = Book.new
+    @user = current_user
   end
 
   def show
     @book = Book.find(params[:id])
-    # @book = Book.new →投稿したidに飛ぶようにする？
+    @user = @book.user
+    @newbook = Book.new
   end
 
   def destroy
@@ -28,7 +37,7 @@ class BooksController < ApplicationController
     @book.user_id = current_user.id
     @book.destroy
     redirect_to books_path
-    flash[:notice]="消しちゃったよよ!!!!!!!!!!!!"
+    flash[:notice]="You have destroyed book successfully"
   end
 
   def edit
@@ -38,9 +47,14 @@ class BooksController < ApplicationController
   def update
     @book = Book.find(params[:id])
     @book.user_id = current_user.id
-    @book.update(book_params)
-    redirect_to book_path(@book)
+    if @book.update(book_params)
+      flash[:notice] = 'You have updated book successfully'
+      redirect_to book_path(@book)
+    else
+      render :edit
+    end
   end
+
 
   private
 
@@ -48,4 +62,12 @@ class BooksController < ApplicationController
     params.require(:book).permit(:title, :body)
   end
 
+
+  def limited_user
+    @book = Book.find(params[:id])
+    @user = @book.user
+    unless @user == current_user
+      redirect_to books_path
+    end
+  end
 end

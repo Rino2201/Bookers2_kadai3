@@ -13,12 +13,11 @@ class ApplicationController < ActionController::Base
     root_path
   end
   # ログアウト後は'homes#top' '/'へ!!
-  # 未変更1/23
 
   protected
 
   def configure_permitted_parameters
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:name])
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:email])
   end
 
 end

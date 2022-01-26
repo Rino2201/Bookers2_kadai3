@@ -9,6 +9,16 @@ class User < ApplicationRecord
   has_one_attached :profile_image
   # プロフィール画像用
 
+  validates :name, uniqueness: true
+  ##一意性
+  validates :name, length:{ minimum: 2 , maximum: 20 }
+  ##最低2文字、最大2文字
+
+  validates :introduction, uniqueness: true
+  validates :introduction, length:{ maximum: 50 }
+
+
+
 def get_profile_image(size)
   unless profile_image.attached?
     file_path = Rails.root.join('app/assets/images/no_image.jpg')
